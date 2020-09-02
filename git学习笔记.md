@@ -59,9 +59,6 @@
 - ```
   # 暂存区的回滚
   git reset --hard 版本号
-  git check 042fdd4e299172dbd91c9b9f18924ba6c2272435
-  # 更加简单的⼀个版本，切换到⼀个版本
-  git reset HEAD^
   # 切换到上上⼀个版本，HEAD^^，HEAD^^^上上上⼀个
   git reset HEAD^^
   # 查看每⼀次命令
@@ -82,9 +79,28 @@
 
   因为我们创建Git版本库时，Git自动为我们创建了唯一一个`master`分支，所以，现在，`git commit`就是往`master`分支上提交更改
 
+## 撤销修改
 
+- 命令`git checkout -- README.md`意思就是，把`README.md`文件在工作区的修改全部撤销，这里有两种情况：
 
+  一种是`README.md`自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；
 
+  一种是`README.md`已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。
+
+  总之，就是让这个文件回到最近一次`git commit`或`git add`时的状态。
+
+## 暂存区与远程仓库的连接
+
+- ```
+  #⽣成ssh密钥
+  ssh-keygen -t rsa -C “你的github邮箱”
+  #电脑下根据路径查找到密钥
+  #github官⽹下setting
+  git remote add origin + github仓库⽹站
+  git push -u origin master
+  ```
+
+  
 
 
 
