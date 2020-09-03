@@ -71,7 +71,7 @@
 
 - 工作区有一个隐藏目录`.git`，这个不算工作区，而是Git的版本库。Git的版本库里存了很多东西，其中最重要的就是称为stage（或者叫index）的暂存区，还有Git为我们自动创建的第一个分支`master`，以及指向`master`的一个指针叫`HEAD`。
 
-  ![](E:\desktop\1599022428(1).jpg)
+  ![1599135113_1_.jpg](https://i.loli.net/2020/09/03/p6NJknCHwtaWsf9.png)
 
 - 第一步是用`git add`把文件添加进去，实际上就是把文件修改添加到暂存区；
 
@@ -100,7 +100,50 @@
   git push -u origin master
   ```
 
+
+## 分支管理
+
+- 当我们创建新的分支，例如`dev`时，Git新建了一个指针叫`dev`，指向`master`相同的提交，再把`HEAD`指向`dev`，就表示当前分支在`dev`上：
+
+- 假如我们在`dev`上的工作完成了，就可以把`dev`合并到`master`上。Git怎么合并呢？最简单的方法，就是直接把`master`指向`dev`的当前提交，就完成了合并
+
+- 合并完分支后，甚至可以删除`dev`分支。删除`dev`分支就是把`dev`指针给删掉，删掉后，我们就剩下了一条`master`分支：
+
+- 实战
+
+  - ```
+    git checkout -b dev
+    # git checkout命令加上-b参数表示创建并切换，相当于以下两条命令
+    # git branch dev
+    # git checkout dev
+    ```
+
   
 
+  - ```
+    # 用git branch命令查看当前分支
+    # git branch命令会列出所有分支，当前分支前面会标一个*号
+    # 我们就可以在dev分支上正常提交，比如对README.md做个修改，修改后提交
+    git add README.md
+    git commit -m "branch test"
+    # 切换回master分支后，再查看一个README.md文件，刚才添加的内容不见了！因为那个提交是在dev分支上，而master分支此刻的提交点并没有变
+    # 把dev分支的工作成果合并到master分支上
+    git merge dev
+    # git merge命令用于合并指定分支到当前分支。合并后，再查看README.md的内容，就可以看到，和dev分支的最新提交是完全一样的。注意到上面的Fast-forward信息，Git告诉我们，这次合并是“快进模式”，也就是直接把master指向dev的当前提交，所以合并速度非常快。当然，也不是每次合并都能Fast-forward，我们后面会讲其他方式的合并。合并完成后，就可以放心地删除dev分支了
+    git branch -d dev
+    git branch
+    ```
 
+  - 总结：
 
+    ```
+    Git鼓励大量使用分支：
+    查看分支：git branch
+    创建分支：git branch <name>
+    切换分支：git checkout <name>或者git switch <name>
+    创建+切换分支：git checkout -b <name>或者git switch -c <name>
+    合并某分支到当前分支：git merge <name>
+    删除分支：git branch -d <name>
+    ```
+
+    
